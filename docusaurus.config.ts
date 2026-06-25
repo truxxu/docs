@@ -11,8 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
+  url: 'https://truxxu.github.io',
+  baseUrl: '/docs/',
+
+  organizationName: 'truxxu',
+  projectName: 'docs',
 
   onBrokenLinks: 'throw',
 
