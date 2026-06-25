@@ -1,0 +1,248 @@
+---
+title: "React Native"
+slug: /dev/react-native
+---
+
+## Watchman
+
+```
+brew install watchman
+```
+
+## JDK
+
+```
+brew install --cask zulu@17
+```
+
+## Android Studio
+
+Once installed, navigate to Android SDK and make sure the following components are installed:
+
+Android 15
+
+- Android SDK Platform 35
+- Sources for Android 35
+- Android SDK Build-Tools 36.0.0
+- Android Emulator
+- Android SDK Platform-Tools
+- Google APIs ARM 64 v8a System Image
+
+Add to .zshrc
+
+```shell
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+
+Restart the terminal and verify installation
+
+```
+echo $ANDROID_HOME
+echo $PATH
+```
+
+## Ruby
+
+```
+#remove previous versions of ruby
+rvm implode && sudo rm -rf ~/.rvm
+sudo rm -rf $HOME/.rbenv /usr/local/rbenv /opt/rbenv /usr/local/opt/rbenv
+brew uninstall --force rbenv ruby-build
+exec zsh
+# install ruby version manager
+brew install rbenv ruby-build
+# load into shell
+rbenv init
+# restart terminal
+exec zsh
+# install ruby 2.7.6 (Oct 2022)
+rbenv install 2.7.6
+# set global ruby version
+rbenv global 2.7.6
+# check version
+ruby --version
+# install bundler gem
+gem install bundler
+# configure shell to load rbenv
+# edit ~/.zshrc to add
+echo 'eval "$(~/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc
+```
+
+## CLI Tools
+
+Open Xcode, then choose "Preferences..." from the Xcode menu. Go to the Locations panel and install the tools by selecting the most recent version in the Command Line Tools dropdown.
+
+## iOS Simulator
+
+Open Xcode > Preferences... and select the Components tab. Select a simulator with the corresponding version of iOS you wish to use.
+
+## CocoaPods (in case of errors)
+
+```
+sudo arch -x86_64 gem install ffi
+arch -x86_64 pod install
+```
+
+## Start new project
+
+```
+npx react-native init AwesomeProject
+# in case of errors:
+cd ios
+pod install
+```
+
+## Running an app
+
+```
+yarn start
+yarn ios
+```
+
+## Android Emulator
+
+```
+# Check AVD/physical device is present
+adb devices
+# List available emulators
+emulator -list-avds
+# Open emulator
+emulator @emulator_name
+```
+
+## Sign Release
+
+Create signing key
+
+```
+keytool -genkey -v -keystore your_key_name.keystore -alias your_key_alias -keyalg RSA -keysize 2048 -validity 10000
+```
+
+Move key into android folder
+
+```
+mv ./mykey.keystore ./android/app
+```
+
+Add variables to ~/.gradle/gradle.properties
+
+```
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+MYAPP_UPLOAD_STORE_PASSWORD=*****
+MYAPP_UPLOAD_KEY_PASSWORD=*****
+```
+
+Add signing config for release to android/app/build.gradle
+
+```
+signingConfigs{
+  ...
+  release {
+      if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+          storeFile file(MYAPP_UPLOAD_STORE_FILE)
+          storePassword MYAPP_UPLOAD_STORE_PASSWORD
+          keyAlias MYAPP_UPLOAD_KEY_ALIAS
+          keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+      }
+  }
+}
+```
+
+```
+buildTypes {
+  ...
+  release {
+    signingConfig signingConfigs.release
+    ...
+  }
+}
+```
+
+Create folder android/app/src/main/assets
+
+Run command
+
+```
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+```
+
+## Generate APK
+
+Run command to generate APK
+
+```
+rm -rf android/app/src/main/res/drawable-*
+
+npx react-native bundle --platform android --dev false \
+  --entry-file index.js \
+  --bundle-output android/app/src/main/assets/index.android.bundle \
+  --assets-dest android/app/build/intermediates/res/merged/release/
+
+cd android && ./gradlew assembleRelease
+```
+
+Find APK file
+
+```
+~/my-app/android/app/build/outputs/apk/release
+```
+
+## Generate AAB
+
+```
+# Run command to generate AAB
+npx react-native build-android --mode=release
+# Find AAB file
+~/my-app/android/app/build/outputs/bundle/release/app-release.aab
+```
+
+## Reload .env variables
+
+```
+npx react-native start --reset-cache
+```
+
+## Show Async Storage Values
+
+Using the RN Debugger it is possible to see what is stored in Async Storage
+
+```
+showAsyncStorageContentInDev()
+```
+
+## Add custom fonts
+
+1. Add ttf files to /assets/fonts/
+
+2. Create file react-native.config.js and add the following config:
+
+```
+module.exports = {
+  project: {
+    ios: {},
+    android: {},
+  },
+  assets: ['./assets/fonts/'],
+};
+```
+
+3. Run command
+
+```
+npx react-native link
+```
+
+## Test release Android
+
+```
+yarn android --mode release
+```
+
+## Test release Android iOS
+
+```
+yarn ios --mode Release
+```

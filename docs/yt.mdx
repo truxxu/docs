@@ -1,0 +1,42 @@
+---
+title: "Youtube"
+slug: /youtube-dl
+---
+
+## yt-dlp
+
+Fork of youtube-dl. Works pretty much the same
+
+### Linux
+
+```
+# install
+sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+sudo chmod a+rx /usr/local/bin/yt-dlp
+# update
+yt-dlp -U
+```
+
+### macOS
+
+```
+# install
+brew install yt-dlp
+# update
+brew upgrade yt-dlp
+```
+
+## Batch Files
+
+```
+yt-dlp --batch-file="./links.txt"
+```
+
+## Download and convert to mp3
+
+```
+# For playlists
+yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s" --yes-playlist 'https://www.youtube.com/list=PLdYwhvDpx0FI2cmiSVn5cMufHjYHpo_88'
+# For Batch Files
+yt-dlp --ignore-errors --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "%(title)s.%(ext)s" --batch-file="/path/to/playlist.txt"
+```

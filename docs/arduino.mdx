@@ -1,0 +1,31 @@
+---
+title: Arduino
+slug: /arduino
+---
+
+1. Download latest Arduino IDE release
+
+2. Extract
+
+```
+tar -xvf arduino-1.8.19-linux64.tar.xz
+cd arduino-1.8.19
+```
+
+3. Run the install script
+
+```
+sudo sh install.sh
+```
+
+4. Set serial port permissions
+
+```
+sudo usermod -a -G dialout _username_
+```
+
+5. Adding support for ESP8266 boards
+
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+
+6. Adding support ofr ESP32 boards

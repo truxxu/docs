@@ -1,0 +1,81 @@
+---
+title: "Flutter"
+slug: /dev/flutter
+---
+
+Install flutter using snap
+
+```
+sudo snap install flutter --classic
+```
+
+Display SDK path
+
+```
+flutter sdk-path
+```
+
+Add to .zshrc
+
+```
+export PATH=$PATH:$HOME/snap/flutter/common/flutter
+```
+
+Verify that flutter is now in PATH
+
+```
+echo $PATH
+```
+
+Verify that flutter command is available
+
+```
+which flutter
+```
+
+Install Command Line Tools for Android
+
+```
+Android Studio > SDK Manager > SDK Tools > Android SDK Command-line tools (latest)
+```
+
+Accept remaining License agreements
+
+```
+flutter doctor --android-licenses
+```
+
+Check for necessary dependencies
+
+```
+flutter doctor
+```
+
+Setup for Linux desktop
+
+```
+sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev
+```
+
+Enable Linux desktop support
+
+```
+flutter config --enable-linux-desktop
+```
+
+Install the Flutter and Dart plugins for VSCode
+
+Validate setup for VSCode. View > Command Palette > doctor > Flutter: Run Flutter Doctor
+
+Create a new app
+
+```
+flutter create myapp
+cd myapp
+```
+
+Start the app
+
+```
+flutter run
+```

@@ -1,0 +1,46 @@
+---
+title: "ExpressJS"
+slug: /dev/express
+---
+
+Create new folder
+
+```
+mkdir myapp
+cd myapp
+git init
+```
+
+Use the npm init command to create a package.json file for your application
+
+```
+npm init
+```
+
+Use default values, except for the entry point. Define it as app.js.
+
+Install express as dependency.
+
+```
+npm install express
+```
+
+Install nodemon as dev dependency
+
+```
+npm install --save-dev nodemon
+```
+
+Add a starting script in the package.json file
+
+```
+"start": "nodemon app.js"
+```
+
+Install additional packages
+
+```
+npm i body-parser dotenv express-validator axios
+```
+
+Add gitignore and env files

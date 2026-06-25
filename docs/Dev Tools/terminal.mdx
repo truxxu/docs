@@ -1,0 +1,79 @@
+---
+title: "Terminal"
+slug: /dev/terminal
+---
+
+I am fond of working with Terminator as terminal emulator and zsh as my shell.
+So, first we need to install these two:
+
+## Terminator
+
+```
+sudo apt install terminator
+```
+
+## ohmyzsh
+
+```
+sudo apt install -y zsh curl vim nodejs imagemagick jq
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sudo reboot
+```
+
+## Plugins
+
+- gitfast
+
+- last-working-dir
+
+- common-aliases
+
+- sublime
+
+- zsh-syntax-highlighting
+
+- history-substring-search
+
+## .zshrc example
+
+```shell
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+plugins=(git last-working-dir github common-aliases history-substring-search)
+
+source $ZSH/oh-my-zsh.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# loads rbenv
+eval "$(rbenv init - zsh)"
+
+# Android
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Python
+export PATH="/Users/citizen/Library/Python/3.11/bin:$PATH"
+
+# Flutter
+export PATH="$PATH:/Users/citizen/workspace/flutter/bin"
+# pnpm
+export PNPM_HOME="/Users/citizen/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Figma API Token for Claude Code MCP
+export FIGMA_TOKEN="xxx"
+```
